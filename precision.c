@@ -68,8 +68,8 @@ char	*build_precision_result(char *num, int precision,
 
 /* NEW: Apply number precision - pad with leading zeros
  * Handles cases like %.5d which should pad numbers with zeros to 5 digits
- * UPDATE: Removed ternary operators for norminette compliance
- * UPDATE_13: Split into helper functions for norminette 25-line compliance */
+ * UPDATE: Removed ternary operators for norminette
+ * UPDATE_13: Split into helper functions for norminette 25-line */
 char	*apply_no_prec(char *num, int precision, int is_negative)
 {
 	int		num_len;
