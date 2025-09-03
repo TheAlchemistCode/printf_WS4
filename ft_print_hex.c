@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 14:38:59 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/01 17:14:13 by clyon            ###   ########.fr       */
+/*   Created: 2025/09/03 20:17:04 by clyon             #+#    #+#             */
+/*   Updated: 2025/09/03 20:57:37 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,27 @@ int	ft_print_hex(unsigned int num, const char format)
 
 /* UPDATE: Enhanced version with struct - REFACTORED to use ≤4 parameters!
  * UPDATE_2: Simplified and split for norminette compliance */
-int	ft_print_hex_formatted(unsigned int num, t_format_info info)
+int	ft_print_hex_formatted(unsigned int num, t_format_spec spec)
 {
 	char	*hex_str;
 	char	*processed;
 	int		result;
 
-	if (should_hide_zero(num, info.precision))
-		return (apply_width("", info.width, info.left_align));
-	hex_str = create_hex_string(num, info.specifier);
+	if (should_hide_zero(num, spec.precision))
+		return (apply_width("", spec.width, spec.left_align));
+	hex_str = create_hex_string(num, spec.specifier);
 	if (!hex_str)
 		return (0);
-	if (info.precision >= 0)
+	if (spec.precision >= 0)
 	{
-		processed = apply_no_prec(hex_str, info.precision, 0);
-		result = apply_width(processed, info.width, info.left_align);
+		processed = apply_no_prec(hex_str, spec.precision, 0);
+		result = apply_width(processed, spec.width, spec.left_align);
 		if (processed != hex_str)
 			free(processed);
 	}
 	else
-		result = zero_space_padr(hex_str, info.width,
-				info.left_align, info.zero_pad);
+		result = zero_space_padr(hex_str, spec.width,
+				spec.left_align, spec.zero_pad);
 	free(hex_str);
 	return (result);
 }

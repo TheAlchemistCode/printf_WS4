@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 10:00:00 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/03 10:00:00 by clyon            ###   ########.fr       */
+/*   Created: 2025/09/03 20:17:55 by clyon             #+#    #+#             */
+/*   Updated: 2025/09/03 20:17:55 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Handle string formatting with struct - REFACTORED to use ≤4 parameters!
  * UPDATE_11: Fixed NULL precision logic - 
  * precision >= 6 shows "(null)", < 6 shows empty */
-int	handle_string_format(va_list args, t_format_info info)
+int	handle_string_format(va_list args, t_format_spec spec)
 {
 	char	*content;
 	char	*processed;
@@ -24,26 +24,26 @@ int	handle_string_format(va_list args, t_format_info info)
 	content = va_arg(args, char *);
 	if (!content)
 	{
-		if (info.precision >= 0 && info.precision < 6)
-			return (apply_width("", info.width, info.left_align));
+		if (spec.precision >= 0 && spec.precision < 6)
+			return (apply_width("", spec.width, spec.left_align));
 		content = "(null)";
 	}
-	if (info.precision == 0)
-		return (apply_width("", info.width, info.left_align));
-	if (info.precision >= 0)
+	if (spec.precision == 0)
+		return (apply_width("", spec.width, spec.left_align));
+	if (spec.precision >= 0)
 	{
-		processed = apply_string_precision(content, info.precision);
-		result = apply_width(processed, info.width, info.left_align);
+		processed = apply_string_precision(content, spec.precision);
+		result = apply_width(processed, spec.width, spec.left_align);
 		if (processed != content)
 			free(processed);
 	}
 	else
-		result = apply_width(content, info.width, info.left_align);
+		result = apply_width(content, spec.width, spec.left_align);
 	return (result);
 }
 
 /* Handle integer formatting with struct - REFACTORED to use ≤4 parameters! */
-int	handle_integer_format(va_list args, t_format_info info)
+int	handle_integer_format(va_list args, t_format_spec spec)
 {
 	char	*content;
 	char	*processed;
@@ -51,19 +51,19 @@ int	handle_integer_format(va_list args, t_format_info info)
 	int		value;
 
 	value = va_arg(args, int);
-	if (should_hide_zero(value, info.precision))
-		return (apply_width("", info.width, info.left_align));
+	if (should_hide_zero(value, spec.precision))
+		return (apply_width("", spec.width, spec.left_align));
 	content = ft_itoa(value);
-	if (info.precision >= 0)
+	if (spec.precision >= 0)
 	{
-		processed = apply_no_prec(content, info.precision, (value < 0));
-		result = apply_width(processed, info.width, info.left_align);
+		processed = apply_no_prec(content, spec.precision, (value < 0));
+		result = apply_width(processed, spec.width, spec.left_align);
 		if (processed != content)
 			free(processed);
 	}
 	else
-		result = zero_space_padr(content, info.width,
-				info.left_align, info.zero_pad);
+		result = zero_space_padr(content, spec.width,
+				spec.left_align, spec.zero_pad);
 	free(content);
 	return (result);
 }

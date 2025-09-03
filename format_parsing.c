@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   format_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 00:00:00 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/02 00:00:00 by clyon            ###   ########.fr       */
+/*   Created: 2025/09/03 20:18:02 by clyon             #+#    #+#             */
+/*   Updated: 2025/09/03 20:18:02 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,34 +78,34 @@ int	apply_char_width(char c, int width, int left_align)
 	return (total);
 }
 
-/* Parse format string using t_format_info struct - reduced from 6 to 3 params
+/* Parse format string using t_format_spec struct - reduced from 6 to 3 params
  * Captures precision (.3) and zero-padding (0) flags
  * Split flag parsing to helper function for brevity
  * Returns format specifier character
  * Uses struct instead of individual parameters */
-char	parse_format(const char *str, int *i, t_format_info *info)
+char	parse_format(const char *str, int *i, t_format_spec *spec)
 {
-	info->width = 0;
-	info->left_align = 0;
-	info->precision = -1;
-	info->zero_pad = 0;
+	spec->width = 0;
+	spec->left_align = 0;
+	spec->precision = -1;
+	spec->zero_pad = 0;
 	(*i)++;
-	parse_flags(str, i, &info->left_align, &info->zero_pad);
+	parse_flags(str, i, &spec->left_align, &spec->zero_pad);
 	while (str[*i] >= '0' && str[*i] <= '9')
 	{
-		info->width = info->width * 10 + (str[*i] - '0');
+		spec->width = spec->width * 10 + (str[*i] - '0');
 		(*i)++;
 	}
 	if (str[*i] == '.')
 	{
 		(*i)++;
-		info->precision = 0;
+		spec->precision = 0;
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
-			info->precision = info->precision * 10 + (str[*i] - '0');
+			spec->precision = spec->precision * 10 + (str[*i] - '0');
 			(*i)++;
 		}
 	}
-	info->specifier = str[*i];
+	spec->specifier = str[*i];
 	return (str[*i]);
 }

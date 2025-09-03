@@ -218,42 +218,42 @@ int  ft_print_hex_formatted(unsigned int num, const char format,
 - Hard to extend with new format flags
 - Function signatures getting unwieldy
 
-#### **The Breakthrough**: Format Info Structure
-**Solution**: Created a unified struct to group all format-related information:
+#### **The Breakthrough**: Format spec Structure
+**Solution**: Created a unified struct to group all format-related specrmation:
 
 ```c
-typedef struct s_format_info
+typedef struct s_format_spec
 {
     int     width;        // Field width (e.g., %10d)
     int     left_align;   // Left alignment flag (- flag)
     int     precision;    // Precision (.5 in %.5s, -1 if not set)  
     int     zero_pad;     // Zero padding flag (0 flag)
     char    specifier;    // Format specifier (c, s, d, i, u, x, X, p, %)
-} t_format_info;
+} t_format_spec;
 ```
 
 #### **Implementation Strategy**: 
 **Step 1: Create New Structure-Based Functions**
 ```c
 // ✅ NEW - Using struct (3 parameters vs 6!)
-char parse_format_info(const char *str, int *i, t_format_info *info);
+char parse_format_spec(const char *str, int *i, t_format_spec *spec);
 
 // ✅ NEW - Using struct (2 parameters vs 5-6!)  
-int  handle_integer_format_info(va_list args, t_format_info info);
-int  ft_print_hex_formatted_info(va_list args, t_format_info info);
-int  ft_print_unsigned_formatted_info(va_list args, t_format_info info);
+int  handle_integer_format_spec(va_list args, t_format_spec spec);
+int  ft_print_hex_formatted_spec(va_list args, t_format_spec spec);
+int  ft_print_unsigned_formatted_spec(va_list args, t_format_spec spec);
 ```
 
 **Step 2: Refactor Legacy Functions** 
 Instead of keeping legacy versions, completely refactored implementations:
 ```c
 // ✅ REFACTORED - Main functions now use struct directly
-int handle_integer_format(va_list args, t_format_info info)  // 2 params!
+int handle_integer_format(va_list args, t_format_spec spec)  // 2 params!
 {
-    // Access all formatting info through struct fields
-    if (should_hide_zero(value, info.precision))
-        return (apply_width("", info.width, info.left_align));
-    // ... rest uses info.width, info.zero_pad, etc.
+    // Access all formatting spec through struct fields
+    if (should_hide_zero(value, spec.precision))
+        return (apply_width("", spec.width, spec.left_align));
+    // ... rest uses spec.width, spec.zero_pad, etc.
 }
 ```
 
@@ -262,11 +262,11 @@ int handle_integer_format(va_list args, t_format_info info)  // 2 params!
 // ✅ Clean main function using struct
 int ft_printf(const char *str, ...)
 {
-    t_format_info info;  // Single struct instead of 5+ variables
+    t_format_spec spec;  // Single struct instead of 5+ variables
     
-    parse_format_info(str, &i, &info);  // 3 params instead of 6!
-    if (info.width > 0 || info.left_align || info.precision >= 0)
-        length += ft_format_with_info(args, info);  // 2 params!
+    parse_format_spec(str, &i, &spec);  // 3 params instead of 6!
+    if (spec.width > 0 || spec.left_align || spec.precision >= 0)
+        length += ft_format_with_spec(args, spec);  // 2 params!
 }
 ```
 
@@ -285,7 +285,7 @@ int ft_printf(const char *str, ...)
 
 #### **File Structure After Refactoring**:
 ```
-format_info.c      - Struct-based parsing functions (5 functions)
+format_spec.c      - Struct-based parsing functions (5 functions)
 format_handlers.c  - Struct-based format handlers (5 functions)  
 ft_printf.c        - Main function using struct approach
 format_parsing.c   - Legacy parsing (kept for compatibility)

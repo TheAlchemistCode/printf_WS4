@@ -6,7 +6,7 @@
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:37:37 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/01 16:25:01 by clyon            ###   ########.fr       */
+/*   Updated: 2025/09/03 20:57:37 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 /*                       𝑭𝑶𝑹𝑴𝑨𝑻 𝑰𝑵𝑭𝑶 𝑺𝑻𝑹𝑼𝑪𝑻𝑼𝑹𝑬                             */
 /* ========================================================================== */
 
-typedef struct s_format_info
+typedef struct s_format_spec
 {
 	int		width;
 	int		left_align;
 	int		precision;
 	int		zero_pad;
 	char	specifier;
-}	t_format_info;
+}	t_format_spec;
 
 /* ========================================================================== */
 /*                            𝑴𝑨𝑰𝑵 𝑷𝑹𝑰𝑵𝑻𝑭 𝑭𝑼𝑵𝑪𝑻𝑰𝑶𝑵                        */
@@ -42,25 +42,25 @@ int		ft_printf(const char *str, ...);
 /*                         𝑭𝑶𝑹𝑴𝑨𝑻 𝑷𝑨𝑹𝑺𝑰𝑵𝑮 & 𝑪𝑶𝑵𝑻𝑹𝑶𝑳                      */
 /* ========================================================================== */
 
-/* New format info functions - REDUCED parameters! */
-void	init_format_info(t_format_info *info);
-void	parse_flags_info(const char *str, int *i, t_format_info *info);
-void	parse_width_info(const char *str, int *i, t_format_info *info);
-void	parse_precision_info(const char *str, int *i, t_format_info *info);
-char	parse_format_info(const char *str, int *i, t_format_info *info);
+/* New format spec functions - REDUCED parameters! */
+void	init_format_spec(t_format_spec *spec);
+void	parse_flags_spec(const char *str, int *i, t_format_spec *spec);
+void	parse_width_spec(const char *str, int *i, t_format_spec *spec);
+void	parse_precision_spec(const char *str, int *i, t_format_spec *spec);
+char	parse_format_spec(const char *str, int *i, t_format_spec *spec);
 
-/* Updated functions - Now using t_format_info struct */
-char	parse_format(const char *str, int *i, t_format_info *info);
+/* Updated functions - Now using t_format_spec struct */
+char	parse_format(const char *str, int *i, t_format_spec *spec);
 void	parse_flags(const char *str, int *i, int *left_align, int *zero_pad);
 int		ft_format(va_list args, const char format);
-int		ft_format_with_info(va_list args, t_format_info info);
+int		ft_format_with_spec(va_list args, t_format_spec spec);
 
 /* New struct-based format handlers*/
-int		handle_string_format_info(va_list args, t_format_info info);
-int		handle_integer_format_info(va_list args, t_format_info info);
-int		ft_print_unsigned_formatted_info(va_list args, t_format_info info);
-int		ft_print_hex_formatted_info(va_list args, t_format_info info);
-int		ft_print_ptr_formatted_info(va_list args, t_format_info info);
+int		handle_string_format_spec(va_list args, t_format_spec spec);
+int		handle_integer_format_spec(va_list args, t_format_spec spec);
+int		ft_print_unsigned_formatted_spec(va_list args, t_format_spec spec);
+int		ft_print_hex_formatted_spec(va_list args, t_format_spec spec);
+int		ft_print_ptr_formatted_spec(va_list args, t_format_spec spec);
 
 /* ========================================================================== */
 /*                         𝑾𝑰𝑫𝑻𝑯 & 𝑨𝑳𝑰𝑮𝑵𝑴𝑬𝑵𝑻 𝑯𝑬𝑳𝑷𝑬𝑹𝑺                     */
@@ -89,9 +89,9 @@ int		should_hide_zero(int value, int precision);
 /*                       𝑭𝑶𝑹𝑴𝑨𝑻-𝑺𝑷𝑬𝑪𝑰𝑭𝑰𝑪 𝑯𝑨𝑵𝑫𝑳𝑬𝑹𝑺                         */
 /* ========================================================================== */
 
-/* REFACTORED FUNCTIONS - Now use t_format_info struct (≤4 parameters)! */
-int		handle_string_format(va_list args, t_format_info info);
-int		handle_integer_format(va_list args, t_format_info info);
+/* REFACTORED FUNCTIONS - Now use t_format_spec struct (≤4 parameters)! */
+int		handle_string_format(va_list args, t_format_spec spec);
+int		handle_integer_format(va_list args, t_format_spec spec);
 
 /* ========================================================================== */
 /*                         𝑩𝑨𝑺𝑰𝑪 𝑶𝑼𝑻𝑷𝑼𝑻 𝑭𝑼𝑵𝑪𝑻𝑰𝑶𝑵𝑺                         */
@@ -110,8 +110,8 @@ int		ft_print_unsigned(unsigned int n);
 char	*ft_uitoa(unsigned int n);
 int		ft_num_len(unsigned int num);
 
-/* REFACTORED FUNCTION - Now uses t_format_info struct (≤4 parameters)! */
-int		ft_print_unsigned_formatted(unsigned int n, t_format_info info);
+/* REFACTORED FUNCTION - Now uses t_format_spec struct (≤4 parameters)! */
+int		ft_print_unsigned_formatted(unsigned int n, t_format_spec spec);
 
 /* ========================================================================== */
 /*                         𝑯𝑬𝑿𝑨𝑫𝑬𝑪𝑰𝑴𝑨𝑳 𝑭𝑼𝑵𝑪𝑻𝑰𝑶𝑵𝑺                          */
@@ -123,8 +123,8 @@ void	ft_put_hex_to_string(unsigned int num, const char format, char *str);
 char	*create_hex_string(unsigned int num, const char format);
 int		ft_hex_len(unsigned int num);
 
-/* REFACTORED FUNCTION - Now uses t_format_info struct (≤4 parameters)! */
-int		ft_print_hex_formatted(unsigned int num, t_format_info info);
+/* REFACTORED FUNCTION - Now uses t_format_spec struct (≤4 parameters)! */
+int		ft_print_hex_formatted(unsigned int num, t_format_spec spec);
 
 /* ========================================================================== */
 /*                         𝑷𝑶𝑰𝑵𝑻𝑬𝑹 𝑭𝑼𝑵𝑪𝑻𝑰𝑶𝑵𝑺                               */

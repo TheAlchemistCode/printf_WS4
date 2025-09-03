@@ -6,7 +6,7 @@
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:38:00 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/01 16:43:36 by clyon            ###   ########.fr       */
+/*   Updated: 2025/09/03 20:57:37 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,27 @@ int	ft_print_unsigned(unsigned int n)
 /* UPDATE: Enhanced version with struct - REFACTORED to use ≤4 parameters!
  * Handles format specifiers like %5u, %-10u, %.5u, %05u
  * UPDATE_9: Fixed memory leak in else branch */
-int	ft_print_unsigned_formatted(unsigned int n, t_format_info info)
+int	ft_print_unsigned_formatted(unsigned int n, t_format_spec spec)
 {
 	char	*num;
 	char	*processed;
 	int		result;
 
-	if (should_hide_zero(n, info.precision))
-		return (apply_width("", info.width, info.left_align));
+	if (should_hide_zero(n, spec.precision))
+		return (apply_width("", spec.width, spec.left_align));
 	num = ft_uitoa(n);
-	if (info.precision >= 0)
+	if (spec.precision >= 0)
 	{
-		processed = apply_no_prec(num, info.precision, 0);
-		result = apply_width(processed, info.width, info.left_align);
+		processed = apply_no_prec(num, spec.precision, 0);
+		result = apply_width(processed, spec.width, spec.left_align);
 		free(num);
 		if (processed != num)
 			free(processed);
 	}
 	else
 	{
-		result = zero_space_padr(num, info.width,
-				info.left_align, info.zero_pad);
+		result = zero_space_padr(num, spec.width,
+				spec.left_align, spec.zero_pad);
 		free(num);
 	}
 	return (result);
