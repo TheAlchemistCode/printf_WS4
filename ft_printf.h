@@ -6,7 +6,7 @@
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:37:37 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/03 20:57:37 by clyon            ###   ########.fr       */
+/*   Updated: 2025/09/03 21:27:50 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ void	ft_put_hex(unsigned int num, const char format);
 void	ft_put_hex_to_string(unsigned int num, const char format, char *str);
 char	*create_hex_string(unsigned int num, const char format);
 int		ft_hex_len(unsigned int num);
-
-/* REFACTORED FUNCTION - Now uses t_format_spec struct (≤4 parameters)! */
 int		ft_print_hex_formatted(unsigned int num, t_format_spec spec);
 
 /* ========================================================================== */
