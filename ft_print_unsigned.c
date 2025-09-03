@@ -6,24 +6,24 @@
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:38:00 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/03 20:57:37 by clyon            ###   ########.fr       */
+/*   Updated: 2025/09/03 21:30:53 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
- * ft_uitoa:
- * Converts an unsigned int 'n' into a string representation (base 10).
- * Returns a pointer to a malloc'd string containing the number as characters.
- * Caller is responsible for freeing the allocated memory.
+ * 𝐟𝐭_𝐮𝐢𝐭𝐨𝐚:
+ * 𝐂𝐨𝐧𝐯𝐞𝐫𝐭𝐬 𝐚𝐧 𝐮𝐧𝐬𝐢𝐠𝐧𝐞𝐝 𝐢𝐧𝐭 '𝐧' 𝐢𝐧𝐭𝐨 𝐚 𝐬𝐭𝐫𝐢𝐧𝐠 𝐫𝐞𝐩𝐫𝐞𝐬𝐞𝐧𝐭𝐚𝐭𝐢𝐨𝐧 (𝐛𝐚𝐬𝐞 𝟏𝟎).
+ * 𝐑𝐞𝐭𝐮𝐫𝐧𝐬 𝐚 𝐩𝐨𝐢𝐧𝐭𝐞𝐫 𝐭𝐨 𝐚 𝐦𝐚𝐥𝐥𝐨𝐜'𝐝 𝐬𝐭𝐫𝐢𝐧𝐠 𝐜𝐨𝐧𝐭𝐚𝐢𝐧𝐢𝐧𝐠 𝐭𝐡𝐞 𝐧𝐮𝐦𝐛𝐞𝐫 𝐚𝐬 𝐜𝐡𝐚𝐫𝐚𝐜𝐭𝐞𝐫𝐬.
+ * 𝐂𝐚𝐥𝐥𝐞𝐫 𝐢𝐬 𝐫𝐞𝐬𝐩𝐨𝐧𝐬𝐢𝐛𝐥𝐞 𝐟𝐨𝐫 𝐟𝐫𝐞𝐞𝐢𝐧𝐠 𝐭𝐡𝐞 𝐚𝐥𝐥𝐨𝐜𝐚𝐭𝐞𝐝 𝐦𝐞𝐦𝐨𝐫𝐲.
  * 
- *  this pointer, *num, is used to hold the string result (ascii)
- *  len is the number of characters needed to print the string
- *  in the loop,  %10 is to get the digit at the end (right side)
- *  +48 converts to ascii,
- *  n / 10 is to remove the last digit, len -- to move left in the string
- * UPDATE_8: Fixed to handle n == 0 case properly
+ *  𝐭𝐡𝐢𝐬 𝐩𝐨𝐢𝐧𝐭𝐞𝐫, *𝐧𝐮𝐦, 𝐢𝐬 𝐮𝐬𝐞𝐝 𝐭𝐨 𝐡𝐨𝐥𝐝 𝐭𝐡𝐞 𝐬𝐭𝐫𝐢𝐧𝐠 𝐫𝐞𝐬𝐮𝐥𝐭 (𝐚𝐬𝐜𝐢𝐢)
+ *  𝐥𝐞𝐧 𝐢𝐬 𝐭𝐡𝐞 𝐧𝐮𝐦𝐛𝐞𝐫 𝐨𝐟 𝐜𝐡𝐚𝐫𝐚𝐜𝐭𝐞𝐫𝐬 𝐧𝐞𝐞𝐝𝐞𝐝 𝐭𝐨 𝐩𝐫𝐢𝐧𝐭 𝐭𝐡𝐞 𝐬𝐭𝐫𝐢𝐧𝐠
+ *  𝐢𝐧 𝐭𝐡𝐞 𝐥𝐨𝐨𝐩,  %𝟏𝟎 𝐢𝐬 𝐭𝐨 𝐠𝐞𝐭 𝐭𝐡𝐞 𝐝𝐢𝐠𝐢𝐭 𝐚𝐭 𝐭𝐡𝐞 𝐞𝐧𝐝 (𝐫𝐢𝐠𝐡𝐭 𝐬𝐢𝐝𝐞)
+ *  +𝟒𝟖 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐬 𝐭𝐨 𝐚𝐬𝐜𝐢𝐢,
+ *  𝐧 / 𝟏𝟎 𝐢𝐬 𝐭𝐨 𝐫𝐞𝐦𝐨𝐯𝐞 𝐭𝐡𝐞 𝐥𝐚𝐬𝐭 𝐝𝐢𝐠𝐢𝐭, 𝐥𝐞𝐧 -- 𝐭𝐨 𝐦𝐨𝐯𝐞 𝐥𝐞𝐟𝐭 𝐢𝐧 𝐭𝐡𝐞 𝐬𝐭𝐫𝐢𝐧𝐠
+ * 𝐔𝐏𝐃𝐀𝐓𝐄_𝟖: 𝐅𝐢𝐱𝐞𝐝 𝐭𝐨 𝐡𝐚𝐧𝐝𝐥𝐞 𝐧 == 𝟎 𝐜𝐚𝐬𝐞 𝐩𝐫𝐨𝐩𝐞𝐫𝐥𝐲
  */
 char	*ft_uitoa(unsigned int n)
 {

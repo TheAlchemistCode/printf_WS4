@@ -6,7 +6,7 @@
 /*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:37:37 by clyon             #+#    #+#             */
-/*   Updated: 2025/09/03 21:27:50 by clyon            ###   ########.fr       */
+/*   Updated: 2025/09/03 21:28:40 by clyon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		should_hide_zero(int value, int precision);
 /*                       𝑭𝑶𝑹𝑴𝑨𝑻-𝑺𝑷𝑬𝑪𝑰𝑭𝑰𝑪 𝑯𝑨𝑵𝑫𝑳𝑬𝑹𝑺                         */
 /* ========================================================================== */
 
-/* REFACTORED FUNCTIONS - Now use t_format_spec struct (≤4 parameters)! */
 int		handle_string_format(va_list args, t_format_spec spec);
 int		handle_integer_format(va_list args, t_format_spec spec);
 
