@@ -38,7 +38,8 @@ char	*apply_string_precision(char *str, int precision)
 }
 
 /* Helper function to build precision result string */
-char	*build_precision_result(char *num, int precision, int is_negative, int zeros_needed)
+char	*build_precision_result(char *num, int precision,
+		int is_negative, int zeros_needed)
 {
 	char	*result;
 	int		i;
@@ -69,7 +70,7 @@ char	*build_precision_result(char *num, int precision, int is_negative, int zero
  * Handles cases like %.5d which should pad numbers with zeros to 5 digits
  * UPDATE: Removed ternary operators for norminette compliance
  * UPDATE_13: Split into helper functions for norminette 25-line compliance */
-char	*apply_number_precision(char *num, int precision, int is_negative)
+char	*apply_no_prec(char *num, int precision, int is_negative)
 {
 	int		num_len;
 	int		zeros_needed;

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clyon <clyon@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/01 14:37:37 by clyon             #+#    #+#             */
+/*   Updated: 2025/09/01 16:25:01 by clyon            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -39,14 +50,16 @@ int	ft_format(va_list args, const char format)
 	return (0);
 }
 
-/* 𝑁𝐸𝑊: 𝐻𝑎𝑛𝑑𝑙𝑒 𝑓𝑜𝑟𝑚𝑎𝑡 𝑠𝑝𝑒𝑐𝑖𝑓𝑖𝑒𝑟 𝑤𝑖𝑡ℎ 𝑤𝑖𝑑𝑡ℎ 𝑎𝑛𝑑 𝑎𝑙𝑖𝑔𝑛𝑚𝑒𝑛𝑡 - 𝑝𝑟𝑜𝑐𝑒𝑠𝑠𝑒𝑠 𝑝𝑎𝑟𝑠𝑒𝑑 𝑤𝑖𝑑𝑡ℎ/𝑓𝑙𝑎𝑔𝑠 𝑓𝑜𝑟 𝑎𝑙𝑙 𝑓𝑜𝑟𝑚𝑎𝑡 𝑡𝑦𝑝𝑒𝑠
- * 𝑈𝑃𝐷𝐴𝑇𝐸_𝟼: ���������� - �𝑜� 𝑠 _𝑓𝑜𝑟𝑚𝑎𝑡_𝑖𝑛�𝑜 𝑡𝑢! 𝑒��𝑐𝑑 𝑜𝑚 6 ��𝑟����  2! */
+/* 𝑁𝐸𝑊: 𝐻𝑎𝑛𝑑𝑙𝑒 𝑓𝑜𝑟𝑚𝑎𝑡 𝑠𝑝𝑒𝑐𝑖𝑓𝑖𝑒𝑟 𝑤𝑖𝑡ℎ 𝑤𝑖𝑑𝑡ℎ 𝑎𝑛𝑑 𝑎𝑙𝑖𝑔𝑛𝑚𝑒𝑛𝑡 - 
+ * 𝑝𝑟𝑜𝑐𝑒𝑠𝑠𝑒𝑠 𝑝𝑎𝑟𝑠𝑒𝑑 𝑤𝑖𝑑𝑡ℎ/𝑓𝑙𝑎𝑔𝑠 𝑓𝑜𝑟 𝑎𝑙𝑙 𝑓𝑜𝑟𝑚𝑎𝑡 𝑡𝑦𝑝𝑒𝑠
+*/
 int	ft_format_with_info(va_list args, t_format_info info)
 {
 	if (info.specifier == '%')
 		return (ft_print_chr('%'));
 	else if (info.specifier == 'c')
-		return (apply_char_width(va_arg(args, int), info.width, info.left_align));
+		return (apply_char_width(va_arg(args, int),
+				info.width, info.left_align));
 	else if (info.specifier == 's')
 		return (handle_string_format_info(args, info));
 	else if (info.specifier == 'd' || info.specifier == 'i')
@@ -60,7 +73,16 @@ int	ft_format_with_info(va_list args, t_format_info info)
 	return (ft_format(args, info.specifier));
 }
 
-/* 𝑈𝑃𝐷𝐴𝑇𝐸_𝟼: ��𝐸�������� - ��� ��𝑒 �_��𝑜���𝑎�_��� ������ & �𝑛�𝑤 ��𝑠�_�����𝑡_𝑖�𝑜 �����𝑛! */
+/* Helper function to process format specifiers */
+static int	process_format(va_list args, t_format_info info)
+{
+	if (info.width > 0 || info.left_align
+		|| info.precision >= 0 || info.zero_pad)
+		return (ft_format_with_info(args, info));
+	return (ft_format(args, info.specifier));
+}
+
+/* principle function */
 int	ft_printf(const char *str, ...)
 {
 	int				i;
@@ -76,10 +98,7 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			parse_format_info(str, &i, &info);
-			if (info.width > 0 || info.left_align || info.precision >= 0 || info.zero_pad)
-				length += ft_format_with_info(args, info);
-			else
-				length += ft_format(args, info.specifier);
+			length += process_format(args, info);
 			i++;
 		}
 		else

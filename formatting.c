@@ -25,7 +25,7 @@ int	handle_negative_zero_pad(char *content, int padding)
 }
 
 /* NEW: Helper to create hex string for formatting
- * Split from ft_print_hex.c for norminette compliance (max 5 functions per file) */
+ * Split from ft_print_hex.c for norminette compliance  */
 char	*create_hex_string(unsigned int num, const char format)
 {
 	char	*hex_str;
@@ -51,11 +51,12 @@ char	*create_hex_string(unsigned int num, const char format)
 	return (hex_str);
 }
 
-/* UPDATE_5: Helper to parse flags from format string - split from parse_format for norminette compliance */
+/* UPDATE_5: Helper to parse flags from format string - 
+ * split from parse_format for norminette compliance */
 void	parse_flags(const char *str, int *i, int *left_align, int *zero_pad)
 {
-	while (str[*i] == '-' || str[*i] == '0' || str[*i] == '+' || 
-		   str[*i] == ' ' || str[*i] == '#')
+	while (str[*i] == '-' || str[*i] == '0' || str[*i] == '+'
+		|| str[*i] == ' ' || str[*i] == '#')
 	{
 		if (str[*i] == '-')
 			*left_align = 1;

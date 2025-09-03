@@ -142,7 +142,7 @@ if (precision >= 0)
     // ... process and free num
 }
 else
-    result = apply_width_with_zeros(num, ...);  // ❌ num never freed!
+    result = zero_space_padr(num, ...);  // ❌ num never freed!
 ```
 
 **The Fix**: Always ensure all code paths free allocated memory.
@@ -159,7 +159,7 @@ else
 
 #### **Solution**: Strategic Code Splitting
 1. **Split oversized functions**:
-   - `apply_number_precision` (33 lines) → split into helper `build_precision_result`
+   - `apply_no_prec` (33 lines) → split into helper `build_precision_result`
    - `ft_format_with_width` (40+ lines) → moved logic to `format_width.c`
 
 2. **Reorganized file structure**:

@@ -104,13 +104,14 @@ int	ft_print_hex_formatted(unsigned int num, t_format_info info)
 		return (0);
 	if (info.precision >= 0)
 	{
-		processed = apply_number_precision(hex_str, info.precision, 0);
+		processed = apply_no_prec(hex_str, info.precision, 0);
 		result = apply_width(processed, info.width, info.left_align);
 		if (processed != hex_str)
 			free(processed);
 	}
 	else
-		result = apply_width_with_zeros(hex_str, info.width, info.left_align, info.zero_pad);
+		result = zero_space_padr(hex_str, info.width,
+				info.left_align, info.zero_pad);
 	free(hex_str);
 	return (result);
 }

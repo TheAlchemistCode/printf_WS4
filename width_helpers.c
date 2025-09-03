@@ -46,7 +46,7 @@ int	print_left_aligned(char *content, int padding)
 /* NEW: Apply width with zero padding option - handles %05d style formatting
  * UPDATE: Split into smaller functions to meet norminette 25-line limit
  * UPDATE_2: Fixed zero-padding for negative numbers (sign first, then zeros) */
-int	apply_width_with_zeros(char *content, int width, int left_align, int zero_pad)
+int	zero_space_padr(char *content, int width, int left_align, int zero_pad)
 {
 	int	content_len;
 	int	padding;

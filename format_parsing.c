@@ -26,7 +26,7 @@ int	print_spaces(int count)
 	return (printed);
 }
 
-/* NEW: Apply width formatting to content string - handles left/right alignment with padding
+/* NEW: str width formatting - handles left/right alignment with padding
  * UPDATE_14: Fixed double counting of content length in return value */
 int	apply_width(char *content, int width, int left_align)
 {
@@ -54,7 +54,7 @@ int	apply_width(char *content, int width, int left_align)
 	return (total);
 }
 
-/* NEW: Apply width formatting to a single character - handles %c with width specifiers
+/* NEW: chr width formatting - handles %c with width specifiers
  * UPDATE_12: Fixed double counting of character in return value */
 int	apply_char_width(char c, int width, int left_align)
 {
@@ -78,11 +78,11 @@ int	apply_char_width(char c, int width, int left_align)
 	return (total);
 }
 
-/* REFACTORED: Parse format string using t_format_info struct - REDUCED from 6 parameters to 3!
- * UPDATE: Now captures precision (.3) and zero-padding flag (0) for full format support
- * UPDATE_5: Shortened to under 25 lines by splitting flag parsing to helper function
- * UPDATE_15: Added missing return statement for format specifier character
- * UPDATE_16: Refactored to use t_format_info struct instead of individual parameters */
+/* Parse format string using t_format_info struct - reduced from 6 to 3 params
+ * Captures precision (.3) and zero-padding (0) flags
+ * Split flag parsing to helper function for brevity
+ * Returns format specifier character
+ * Uses struct instead of individual parameters */
 char	parse_format(const char *str, int *i, t_format_info *info)
 {
 	info->width = 0;

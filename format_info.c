@@ -37,8 +37,8 @@ void	init_format_info(t_format_info *info)
 /* Parse flags from format string */
 void	parse_flags_info(const char *str, int *i, t_format_info *info)
 {
-	while (str[*i] == '-' || str[*i] == '0' || str[*i] == '+' || 
-		   str[*i] == ' ' || str[*i] == '#')
+	while (str[*i] == '-' || str[*i] == '0' || str[*i] == '+'
+		|| str[*i] == ' ' || str[*i] == '#')
 	{
 		if (str[*i] == '-')
 			info->left_align = 1;

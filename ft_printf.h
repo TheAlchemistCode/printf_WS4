@@ -68,7 +68,7 @@ int		ft_print_ptr_formatted_info(va_list args, t_format_info info);
 
 int		apply_width(char *content, int width, int left_align);
 int		apply_char_width(char c, int width, int left_align);
-int		apply_width_with_zeros(char *content, int width,
+int		zero_space_padr(char *content, int width,
 			int left_align, int zero_pad);
 int		print_spaces(int count);
 int		print_zeros(int count);
@@ -80,7 +80,7 @@ int		handle_negative_zero_pad(char *content, int padding);
 /* ========================================================================== */
 
 char	*apply_string_precision(char *str, int precision);
-char	*apply_number_precision(char *num, int precision, int is_negative);
+char	*apply_no_prec(char *num, int precision, int is_negative);
 char	*build_precision_result(char *num, int precision,
 			int is_negative, int zeros_needed);
 int		should_hide_zero(int value, int precision);

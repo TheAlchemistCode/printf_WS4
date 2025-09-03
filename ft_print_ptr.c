@@ -75,7 +75,8 @@ int	ft_print_ptr(unsigned long long ptr)
 	return (length);
 }
 
-/* UPDATE: Enhanced version with width and alignment support for pointer formatting
+/* UPDATE: Enhanced version with width 
+ * and alignment support for pointer formatting
  * Handles format specifiers like %15p, %-20p */
 int	ft_print_ptr_formatted(unsigned long long ptr, int width, int left_align)
 {

@@ -13,7 +13,8 @@
 #include "ft_printf.h"
 
 /* Handle string formatting with struct - REFACTORED to use ≤4 parameters!
- * UPDATE_11: Fixed NULL precision logic - precision >= 6 shows "(null)", < 6 shows empty */
+ * UPDATE_11: Fixed NULL precision logic - 
+ * precision >= 6 shows "(null)", < 6 shows empty */
 int	handle_string_format(va_list args, t_format_info info)
 {
 	char	*content;
@@ -55,13 +56,14 @@ int	handle_integer_format(va_list args, t_format_info info)
 	content = ft_itoa(value);
 	if (info.precision >= 0)
 	{
-		processed = apply_number_precision(content, info.precision, (value < 0));
+		processed = apply_no_prec(content, info.precision, (value < 0));
 		result = apply_width(processed, info.width, info.left_align);
 		if (processed != content)
 			free(processed);
 	}
 	else
-		result = apply_width_with_zeros(content, info.width, info.left_align, info.zero_pad);
+		result = zero_space_padr(content, info.width,
+				info.left_align, info.zero_pad);
 	free(content);
 	return (result);
 }

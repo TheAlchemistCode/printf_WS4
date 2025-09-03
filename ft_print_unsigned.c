@@ -102,7 +102,7 @@ int	ft_print_unsigned_formatted(unsigned int n, t_format_info info)
 	num = ft_uitoa(n);
 	if (info.precision >= 0)
 	{
-		processed = apply_number_precision(num, info.precision, 0);
+		processed = apply_no_prec(num, info.precision, 0);
 		result = apply_width(processed, info.width, info.left_align);
 		free(num);
 		if (processed != num)
@@ -110,7 +110,8 @@ int	ft_print_unsigned_formatted(unsigned int n, t_format_info info)
 	}
 	else
 	{
-		result = apply_width_with_zeros(num, info.width, info.left_align, info.zero_pad);
+		result = zero_space_padr(num, info.width,
+				info.left_align, info.zero_pad);
 		free(num);
 	}
 	return (result);
