@@ -12,18 +12,6 @@
 
 #include "ft_printf.h"
 
-/* 
- * t_format_spec struct definition (from ft_printf.h):
- * typedef struct s_format_spec
- * {
- *     int    width;        // Field width (e.g., %10d)
- *     int    left_align;   // Left alignment flag (- flag)
- *     int    precision;    // Precision (.5 in %.5s, -1 if not set)
- *     int    zero_pad;     // Zero padding flag (0 flag)
- *     char   specifier;    // Format specifier (c, s, d, i, u, x, X, p, %)
- * } t_format_spec;
- */
-
 /* Initialize format spec structure with default values */
 void	init_format_spec(t_format_spec *spec)
 {
